@@ -5,6 +5,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 //Get the images for carousel
@@ -38,11 +39,17 @@ export const getProducts = async () => {
   }
 };
 
-export const updateProductsQuantity = async (id, quantity, index) => {
-  try {
-    const collection = collection(db, "products");
-  } catch (error) {}
+//Update quantity in products Collection
+export const updateProductsQuantity = async (id, quantityFromUI, index) => {
+  console.log("in fetch update", id, quantityFromUI, index);
+  const collectionRef = doc(db, "products", id);
+  await updateDoc(collectionRef, {
+    quantity:{
+      index: (quantityFromUI - 1)
+    }
+  })
 };
+
 
 //Add products to cart
 export const addToCart = async (name, url, price, quantity, size) => {

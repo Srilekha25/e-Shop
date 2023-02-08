@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { dataContext } from "../../context/dataProvider";
-import { addToCart } from "../../Data-utils/fetch";
+import { addToCart, updateProductsQuantity } from "../../Data-utils/fetch";
 import styles from "./Products.module.scss";
 
 const Products = () => {
@@ -16,7 +16,7 @@ const Products = () => {
 
   //Set size from select dropdown
   const [size, setSize] = useState("XS");
-  const [index, setIndex] = useState(0);
+  const [indexOfQuantity, setIndexOfQuantity] = useState(0);
   const [toCartDB, setToCartDB] = useState([]);
 
   // Function to open the modal
@@ -28,13 +28,14 @@ const Products = () => {
   //Get the size and index of size
   const handleSizeChange = (event) => {
     setSize(event.target.value);
-    setIndex(event.target.selectedIndex);
+    setIndexOfQuantity(event.target.selectedIndex);
   };
 
   //Getting the product clicked based on the card clicked
-  let productClicked = products.filter((product, index) => {
+  let productClicked = products.filter((product) => {
     return product.id === idClicked;
   });
+  console.log("product clicked",productClicked);
 
   //Get the heart shape for favorite item
   const favoriteItem = (favoritedItem) => {
@@ -51,13 +52,16 @@ const Products = () => {
   };
 
   //Sending ID for Cart.jsx
-  const handleAddToCart = (name, url, price, quantity) => {
+  const handleAddToCart = (name, url, price, quantity, id) => {
     setToCartDB([
       name, url, price, quantity, size
     ]);
-    console.log("sending to addToCart",name, url, price, quantity, size);
-    //updateProductsQuantity(id, quantity,index);
-    addToCart(name, url, price, quantity, size)
+    console.log("sending to addToCart",name, url, price, quantity, size, id, indexOfQuantity);
+    addToCart(name, url, price, quantity, size).then(()=>{
+      updateProductsQuantity(id, quantity, indexOfQuantity).then(()=>{
+        console.log(quantity-1);
+      })
+    })
   };
 
   return (
@@ -120,11 +124,11 @@ const Products = () => {
                   <select onChange={handleSizeChange}>
                     {renderVariants(product.variants)}
                   </select>
-                  <p>{product.quantity[index]} in stock!</p>
+                  <p>{product.quantity[indexOfQuantity]} in stock!</p>
                   <p>$ {product.price}</p>
                   <button
                     onClick={() =>
-                      handleAddToCart(product.name, product.imageUrl, product.price, product.quantity[index])
+                      handleAddToCart(product.name, product.imageUrl, product.price, product.quantity[indexOfQuantity], product.id)
                     }
                   >
                     Add to Cart
