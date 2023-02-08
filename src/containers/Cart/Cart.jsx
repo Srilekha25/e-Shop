@@ -32,12 +32,12 @@ const Cart = () => {
   };
 
   //Handles increment button
-  const handleIncrement = (quantity) => {
-    if (count === quantity) {
-      setCount(quantity);
-    } else {
-      setCount(count + 1);
-    }
+  const handleIncrement = (id, quantity) => {
+      if (count === quantity) {
+        setCount(quantity);
+      } else {
+        setCount(count + 1);
+      }
   };
 
   //Function to handle delete and render the page
@@ -52,8 +52,8 @@ const Cart = () => {
   return (
     <div>
       {cartProducts
-        ? cartProducts.map((product, index) => (
-            <div className={styles.container__cart__contents} key={product.id}>
+        ? cartProducts.map((product) => (
+            <div className={styles.container__cart__contents}>
               <table>
                 <tr>
                   <th>Product Image</th>
@@ -86,7 +86,7 @@ const Cart = () => {
                         -
                       </button>
                       <p> {count} </p>
-                      <button onClick={() => handleIncrement(product.quantity)}>
+                      <button onClick={() => handleIncrement(product.id, product.quantity)}>
                         +
                       </button>
                     </div>

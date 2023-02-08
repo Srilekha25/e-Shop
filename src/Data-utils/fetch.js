@@ -4,8 +4,9 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  updateDoc,
+  increment
 } from "firebase/firestore";
-import { updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 //Get the images for carousel
@@ -39,18 +40,6 @@ export const getProducts = async () => {
   }
 };
 
-//Update quantity in products Collection
-export const updateProductsQuantity = async (id, quantityFromUI, index) => {
-  console.log("in fetch update", id, quantityFromUI, index);
-  const collectionRef = doc(db, "products", id);
-  await updateDoc(collectionRef, {
-    quantity:{
-      index: (quantityFromUI - 1)
-    }
-  })
-};
-
-
 //Add products to cart
 export const addToCart = async (name, url, price, quantity, size) => {
   const addToCartDB = { name, imageUrl: url, price, quantity, variant: size };
@@ -62,6 +51,21 @@ export const addToCart = async (name, url, price, quantity, size) => {
   } catch (error) {
     console.log("error", error.message);
   }
+};
+
+//Update quantity in products Collection
+export const updateProductsQuantity = async (id, quantityFromUI, index) => {
+  console.log("in fetch update", id, quantityFromUI, index);
+  try{
+
+    const collectionRef = doc(db, "products", id);
+    let updateQuantity = {};
+    updateQuantity[`quantity.${index}`] = increment((quantityFromUI - 1));
+    await updateDoc(collectionRef, updateQuantity);
+  }catch(error){
+    console.log("error message in update product",error.message)
+  }
+
 };
 
 //Get products from Cart

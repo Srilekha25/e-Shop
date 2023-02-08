@@ -4,14 +4,13 @@ import { addToCart, updateProductsQuantity } from "../../Data-utils/fetch";
 import styles from "./Products.module.scss";
 
 const Products = () => {
-
   //Get the data in DB from Context
   const products = useContext(dataContext);
 
   //State to open modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-//Get id of card when clicked on the screen
+  //Get id of card when clicked on the screen
   const [idClicked, setIdClicked] = useState(0);
 
   //Set size from select dropdown
@@ -35,8 +34,11 @@ const Products = () => {
   let productClicked = products.filter((product) => {
     return product.id === idClicked;
   });
-  console.log("product clicked",productClicked);
 
+  const handleQuantity = (quantity) => {
+    return quantity[indexOfQuantity]
+  };
+  
   //Get the heart shape for favorite item
   const favoriteItem = (favoritedItem) => {
     return favoritedItem ? "❤️" : "";
@@ -53,15 +55,24 @@ const Products = () => {
 
   //Sending ID for Cart.jsx
   const handleAddToCart = (name, url, price, quantity, id) => {
-    setToCartDB([
-      name, url, price, quantity, size
-    ]);
-    console.log("sending to addToCart",name, url, price, quantity, size, id, indexOfQuantity);
-    addToCart(name, url, price, quantity, size).then(()=>{
-      updateProductsQuantity(id, quantity, indexOfQuantity).then(()=>{
-        console.log(quantity-1);
-      })
-    })
+    setToCartDB([name, url, price, quantity, size]);
+    console.log(
+      "sending to addToCart",
+      name,
+      url,
+      price,
+      quantity,
+      size,
+      id,
+      indexOfQuantity
+    );
+    addToCart(name, url, price, quantity, size).then(() => {
+      updateProductsQuantity(id, quantity, indexOfQuantity).then((data) => {
+        if(data === true){
+
+        }
+      });
+    });
   };
 
   return (
@@ -124,11 +135,17 @@ const Products = () => {
                   <select onChange={handleSizeChange}>
                     {renderVariants(product.variants)}
                   </select>
-                  <p>{product.quantity[indexOfQuantity]} in stock!</p>
+                  <p>{handleQuantity(product.quantity)} in stock!</p>
                   <p>$ {product.price}</p>
                   <button
                     onClick={() =>
-                      handleAddToCart(product.name, product.imageUrl, product.price, product.quantity[indexOfQuantity], product.id)
+                      handleAddToCart(
+                        product.name,
+                        product.imageUrl,
+                        product.price,
+                        product.quantity[indexOfQuantity],
+                        product.id
+                      )
                     }
                   >
                     Add to Cart
