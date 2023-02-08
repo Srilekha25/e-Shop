@@ -1,0 +1,27 @@
+.container__cart__contents{
+    //border: 1px solid black;
+}
+
+table, td, th {  
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 15px;
+  }
+
+.container__cart__image{
+    height: 30vh;
+    width: 15vw;
+}
+
+.container__cart__quantity{
+    display: flex;
+    flex-direction: row;
+}

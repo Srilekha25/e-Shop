@@ -1,0 +1,61 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container__carousel__position {
+  height: 40vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+.container__carousel__buttonPrev {
+  top: 42%;
+  position: absolute;
+  z-index: 2;
+  border: none;
+  left: 32px;
+  font-size: 2rem;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.container__carousel__buttonPrev:hover {
+  color: black;
+}
+.container__carousel__buttonNext {
+  top: 42%;
+  position: absolute;
+  z-index: 2;
+  border: none;
+  right: 32px;
+  font-size: 2rem;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.container__carousel__buttonNext:hover {
+  color: black;
+}
+
+.container__carousel__image {
+  width: 100vw;
+  height: 40vh;
+  position: absolute;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s ease;
+  -webkit-transition: -webkit-transform 0.6s ease;
+}
+
+.container__featured__text {
+  top: 81%;
+  left: 37%;
+  position: absolute;
+  font-weight: bolder;
+  text-shadow: 5px 5px 12px black;
+  color: white;
+  transition: opacity 0.6s ease;
+  -webkit-transition: opacity 0.6s ease;
+}

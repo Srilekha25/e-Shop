@@ -1,0 +1,13 @@
+.container__header__flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 9999;
+  background-color: whitesmoke;
+}
+
+.container__header__h3 {
+  padding: 0px 10px;
+}

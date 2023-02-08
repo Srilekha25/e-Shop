@@ -1,0 +1,70 @@
+.container__products__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+  margin: 2% 10% 2% 10%;
+  text-align: center;
+  font-weight: bold;
+}
+.container__productCards {
+  border: 2px solid rgb(230, 227, 227);
+  border-radius: 6px;
+}
+.container__productCards:hover {
+  box-shadow: 0 0 10px rgb(11, 10, 10);
+  transform: scale(1.02);
+}
+
+.container__productCard__image {
+  height: 300px;
+  width: 100%;
+}
+.container__productCard__name {
+  font-weight: bold;
+}
+.container__productCard__price {
+}
+
+
+//Styles for Modal
+.container__modal {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: white;
+  
+}
+.container__modal__body{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    margin: 5%;
+}
+
+.container__modal__close {  
+    top: 0%;
+    right: 5%;
+    position: absolute;
+    font-size: 20px;
+    padding: 0 10px;
+    border: none;
+    background-color:red;
+}
+.container__for__ModalCards{
+    display: flex;
+    flex-direction: row;
+  }
+.container__modalCard__image{
+    height: 80vh;
+    width: 50vw;
+    border: 2px solid black;
+}
+.container__modalCard__details{
+    padding: 20px;
+    margin: 20px;
+    
+}
