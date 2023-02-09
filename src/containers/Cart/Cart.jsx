@@ -23,7 +23,6 @@ const Cart = () => {
 
   //Handles increment button
   const handleDecrement = (id) => {
-    console.log("count", count);
     if (count <= 1) {
       handleDelete(id);
     } else {

@@ -12,8 +12,6 @@ import SearchBar from "./components/SearchBar/SearchBar";
 //Import Context
 import { dataContext } from "./context/dataProvider";
 import dataProvider from "./context/dataProvider";
-import { cartContext } from "./context/cartProvider";
-import cartProvider from "./context/cartProvider";
 //Import function to fetch Images from DB
 import { getImagesForCarousel, getProducts } from "./Data-utils/fetch";
 
