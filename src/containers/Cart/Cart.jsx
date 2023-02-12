@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { dataContext } from "../../context/dataProvider";
-import { getCartProductsFromDB, deleteById } from "../../Data-utils/fetch";
+import {
+  getCartProductsFromDB,
+  deleteById,
+  updateCartQuantity,
+} from "../../Data-utils/fetch";
 
 import styles from "./Cart.module.scss";
 
@@ -22,21 +26,33 @@ const Cart = () => {
   }, []);
 
   //Handles increment button
-  const handleDecrement = (id) => {
-    if (count <= 1) {
-      handleDelete(id);
-    } else {
-      setCount(count - 1);
-    }
+  const handleDecrement = (product) => {
+    console.log("inside decrement");
+    cartProducts.map((allCartProducts) => {
+      if (product.productId === allCartProducts.productId) {
+        if (product.cartQuantity > 1) {
+          updateCartQuantity(product, "DECREMENET").then((data) => {
+            setCartProducts(data);
+          });
+        }else if(product.cartQuantity === 1){
+          alert("are u sure?");
+          handleDelete(product.id);
+        }else{
+          ""
+        }
+      }
+    });
   };
 
   //Handles increment button
-  const handleIncrement = (id, quantity) => {
-      if (count === quantity) {
-        setCount(quantity);
-      } else {
-        setCount(count + 1);
-      }
+  const handleIncrement = (product) => {
+    console.log("inside increment");
+    // console.log("product", product);
+    // console.log(product.productId)
+    // console.log(allCartProducts.productId)
+    
+      setCount(count + 1);
+    
   };
 
   //Function to handle delete and render the page
@@ -53,51 +69,19 @@ const Cart = () => {
       {cartProducts
         ? cartProducts.map((product) => (
             <div className={styles.container__cart__contents}>
-              <table>
-                <tr>
-                  <th>Product Image</th>
-                  <th>Product Name</th>
-                  <th>Price</th>
-                  <th>Size</th>
-                  <th>Quantity</th>
-                  <th>Delete</th>
-                </tr>
-
-                <tr>
-                  <td>
-                    <img
-                      className={styles.container__cart__image}
-                      src={product.imageUrl}
-                    />
-                  </td>
-                  <td>
-                    <p>{product.name}</p>
-                  </td>
-                  <td>
-                    <p>{product.price}</p>
-                  </td>
-                  <td>
-                    <p>{product.variant}</p>
-                  </td>
-                  <td>
-                    <div className={styles.container__cart__quantity}>
-                      <button onClick={() => handleDecrement(product.id)}>
-                        -
-                      </button>
-                      <p> {count} </p>
-                      <button onClick={() => handleIncrement(product.id, product.quantity)}>
-                        +
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <button onClick={() => handleDelete(product.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </table>
-              <div></div>
+              <img
+                className={styles.container__cart__image}
+                src={product.imageUrl}
+              />
+              <p>Product Name {product.name}</p>
+              <p>Price: {product.price}</p>
+              <p>Size: {product.variants}</p>
+              <div className={styles.container__cart__quantity}>
+                <button onClick={() => handleDecrement(product)}>-</button>
+                <p> {product.cartQuantity} </p>
+                <button onClick={() => handleIncrement(product)}>+</button>
+              </div>
+              <button onClick={() => handleDelete(product.id)}>Delete</button>
             </div>
           ))
         : "Your Cart is Empty. Add items for your Cart!"}

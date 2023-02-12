@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getProducts } from "../../Data-utils/fetch";
 import Products from "../Products/Products";
 import styles from "./HomePage.module.scss";
 
@@ -6,7 +7,6 @@ const HomePage = ({ carousel }) => {
 
   //Set current Image to chnage in carousel
   const [currentImage, setCurrentImage] = useState(1);
-
   //Toggle mouse over
   const [mouseOnHover, setMouseOnHover] = useState(false);
   const lengthOfCarousel = carousel.length;
@@ -22,12 +22,12 @@ const HomePage = ({ carousel }) => {
     );
   };
 
- //useEffect to change images pn carousel
-  useEffect(() => {
-    setTimeout(() => {
-      setCurrentImage((currentImage + 1) % lengthOfCarousel);
-    }, 5000);
-  }, [currentImage]);
+//  //useEffect to change images pn carousel
+//   useEffect(() => {
+//     setTimeout(() => {
+//       setCurrentImage((currentImage + 1) % lengthOfCarousel);
+//     }, 5000);
+//   }, [currentImage]);
 
   return (
     <section>

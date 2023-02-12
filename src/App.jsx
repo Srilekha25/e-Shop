@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //Import Containers for Router
 import HomePage from "./containers/Home/HomePage";
 import Products from "./containers/Products/Products";
+import ProductCard from "./components/ProductCard/ProductCard";
 import Favorites from "./containers/Favorites/Favorites";
 import Cart from "./containers/Cart/Cart";
 import NavBar from "./components/NavBar/NavBar";
@@ -27,7 +28,6 @@ function App() {
   //Call function to Carousel Images from DB
   useEffect(() => {
     try {
-      //addProduct();
       getImagesForCarousel().then(
         (data) => {
           setCarousel(data);
@@ -41,25 +41,25 @@ function App() {
     }
   }, []);
 
-  // console.log("products", products)
   return (
     <div>
-      <dataContext.Provider value={products}>
-          <BrowserRouter>
-            <div>
-              <div className={styles.container__header__flex}>
-                <h3 className={styles.container__header__h3}>e-Shop</h3>
-                <NavBar />
-              </div>
-              <Routes>
-                <Route path="/" element={<HomePage carousel={carousel} />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/searchBar" element={<SearchBar />} />
-              </Routes>
+      <dataContext.Provider value={{products, setProducts}}>
+        <BrowserRouter>
+          <div>
+            <div className={styles.container__header__flex}>
+              <h3 className={styles.container__header__h3}>e-Shop</h3>
+              <NavBar />
             </div>
-          </BrowserRouter>
+            <Routes>
+              <Route exact path="/" element={<HomePage carousel={carousel} />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/productCard/:id" element={<ProductCard />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/searchBar" element={<SearchBar />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
       </dataContext.Provider>
     </div>
   );

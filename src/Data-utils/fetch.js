@@ -5,7 +5,6 @@ import {
   doc,
   deleteDoc,
   updateDoc,
-  increment
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
@@ -41,9 +40,17 @@ export const getProducts = async () => {
 };
 
 //Add products to cart
-export const addToCart = async (name, url, price, quantity, size) => {
-  const addToCartDB = { name, imageUrl: url, price, quantity, variant: size };
-  console.log("adding to cat ->", addToCartDB);
+export const addToCart = async (id, name, url, price, quantity, size) => {
+  const addToCartDB = {
+    productId: id,
+    name,
+    imageUrl: url,
+    price,
+    quantity,
+    variants: size,
+    cartQuantity: 1,
+  };
+
   try {
     const collectionRef = collection(db, "Cart");
     const newDoc = await addDoc(collectionRef, addToCartDB);
@@ -54,18 +61,64 @@ export const addToCart = async (name, url, price, quantity, size) => {
 };
 
 //Update quantity in products Collection
-export const updateProductsQuantity = async (id, quantityFromUI, index) => {
-  console.log("in fetch update", id, quantityFromUI, index);
-  try{
+export const handleUpdateCart = async (productToUpdate, index) => {
+  // Check if the product with the same size already exists in the cart
+  const cartProducts = await getCartProductsFromDB();
+  let checkProductExist = cartProducts.filter((product) => {
+    return (
+      product.productId === productToUpdate.id &&
+      String(product.variants) === String(productToUpdate.variants[index])
+    );
+  });
+  console.log("products already in cart", checkProductExist);
 
-    const collectionRef = doc(db, "products", id);
-    let updateQuantity = {};
-    updateQuantity[`quantity.${index}`] = increment((quantityFromUI - 1));
-    await updateDoc(collectionRef, updateQuantity);
-  }catch(error){
-    console.log("error message in update product",error.message)
+  if (checkProductExist.length > 0) {
+    console.log("Product already exists in the cart");
+    return "Product already exists in the cart";
   }
 
+  // Check if there's enough stock available
+  const productRef = doc(db, "products", productToUpdate.id);
+  const productData = await getProducts();
+  const updatedProduct = productData.filter(
+    (productData) => productData.id === productToUpdate.id
+  );
+  console.log("products in hanlde", updatedProduct);
+  console.log("products in quantity=>", updatedProduct[0].quantity[index]);
+  if (updatedProduct[0].quantity[index] === 0) {
+    console.log("Not enough stock available");
+    return "Not enough stock available";
+  }
+
+  // Update the quantity in the "products" collection
+  let updateQuantity = {};
+  updateQuantity[`quantity.${index}`] = updatedProduct[0].quantity[index] - 1;
+  await updateDoc(productRef, updateQuantity);
+
+  // Add the product to the cart
+  const newDoc = await addToCart(
+    productToUpdate.id,
+    productToUpdate.name,
+    productToUpdate.imageUrl,
+    productToUpdate.price,
+    productToUpdate.quantity[index] - 1,
+    productToUpdate.variants[index]
+  );
+  return newDoc.id;
+};
+
+//Update favorites in products Collection
+export const handleUpdateFavorite = async (product) => {
+  console.log("in fetch update for favorite", product.id);
+  try {
+    const collectionRef = doc(db, "products", product.id);
+    let updateFavorited = {
+      favorited: !product.favorited,
+    };
+    await updateDoc(collectionRef, updateFavorited);
+  } catch (error) {
+    console.log("error message in update product", error.message);
+  }
 };
 
 //Get products from Cart
@@ -81,6 +134,30 @@ export const getCartProductsFromDB = async () => {
     return data;
   } catch (error) {
     console.log("error message:-", error.message);
+  }
+};
+
+export const updateCartQuantity = async (product, message) => {
+  let updateCart;
+  let cartProducts;
+  if (message === "DECREMENET") {
+    console.log(" product.cartQuantity", product.cartQuantity);
+    updateCart = {
+      quantity: product.quantity - 1,
+      cartQuantity : product.cartQuantity - 1,
+    }
+  }
+  try {
+    const collectionRef = doc(db, "Cart",product.id);
+    await updateDoc(collectionRef, updateCart).then(()=>{
+      cartProducts = getCartProductsFromDB().then((data)=>{
+        console.log("data", data)
+        return data;
+      })
+    })
+    return cartProducts;
+  } catch (error) {
+    console.log("error", error.message);
   }
 };
 
