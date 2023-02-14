@@ -5,9 +5,11 @@
 }
 
 .container__carousel__position {
-  height: 40vh;
+  height: 50vh;
   width: 100vw;
   position: relative;
+  object-fit: cover;
+  object-position: center;
   overflow: hidden;
 }
 .container__carousel__buttonPrev {
@@ -41,7 +43,7 @@
 
 .container__carousel__image {
   width: 100vw;
-  height: 40vh;
+  height: 50vh;
   position: absolute;
   object-fit: cover;
   object-position: center;

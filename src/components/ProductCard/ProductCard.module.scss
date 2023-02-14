@@ -1,5 +1,5 @@
 //Styles for Modal
-.container__modal {
+.container__productCard {
   height: 100vh;
   width: 100vw;
   position: fixed;
@@ -7,33 +7,46 @@
   top: 0;
   left: 0;
   background-color: white;
+  margin: 15% 0% 0% 0%;
 }
-.container__modal__body {
+.container__productCard__body {
   height: 100vh;
   width: 100vw;
   position: absolute;
-  margin: 5%;
 }
-
-.container__modal__close {
-  top: 0%;
-  right: 5%;
-  position: absolute;
-  font-size: 20px;
-  padding: 0 10px;
-  border: none;
-  background-color: red;
-}
-.container__for__ModalCards {
+.container__productCard__Cards {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
-.container__modalCard__image {
-  height: 80vh;
-  width: 50vw;
+.container__productCard__image {
+  height: 50vh;
+  width: 30vw;
   border: 2px solid black;
 }
 .container__modalCard__details {
-  padding: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
   margin: 20px;
+  min-width: 350px;
+  width: 20%;
+}
+.product__variants > select {
+  padding: 5px;
+  width: 70%;
+}
+
+.button_addToCart {
+  background-color: white;
+  color: black;
+  width: 70%;
+  padding: 5px;
+  &:hover {
+    background-color: rgb(10, 202, 10);
+    color: white;
+  }
+}
+.product__favorite {
+  color: red;
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-//Import context for Data in DB
+import { NavLink } from "react-router-dom";
 import { dataContext } from "../../context/dataProvider";
 import styles from "../Products/Products.module.scss";
 
@@ -10,30 +10,33 @@ const Favorites = () => {
   const { products, setProducts } = useContext(dataContext);
 
   let favoritedProducts = products.filter((product) => {
-    console.log("inside favorited products");
     return product.favorited === true;
   });
 
-  console.log("favoritedProducts", favoritedProducts);
   return (
     <div className={styles.container__products__grid}>
       {favoritedProducts &&
         favoritedProducts.map((product) => (
           <div key={product.id} className={styles.container__productCards}>
-            <img
-              className={styles.container__productCard__image}
-              src={product.imageUrl}
-            />
-            <div>
+            <NavLink
+              to={`/productCard/${product.id}`}
+              className={styles.navlink}
+            >
+              <img
+                className={styles.container__productCard__image}
+                src={product.imageUrl}
+              />
               <div>
-                <label className={styles.container__productCard__name}>
-                  {product.name}
-                </label>
+                <div>
+                  <label className={styles.container__productCard__name}>
+                    {product.name}
+                  </label>
+                </div>
+                <div className={styles.container__productCard__price}>
+                  <p>$ {product.price}</p>
+                </div>
               </div>
-              <div className={styles.container__productCard__price}>
-                <p>$ {product.price}</p>
-              </div>
-            </div>
+            </NavLink>
           </div>
         ))}
     </div>

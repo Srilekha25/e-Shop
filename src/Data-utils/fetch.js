@@ -20,7 +20,7 @@ export const getImagesForCarousel = async () => {
     });
     return data;
   } catch (error) {
-    console.log("error message:-", error.message);
+   return error;
   }
 };
 //Get all the products in DB
@@ -35,7 +35,7 @@ export const getProducts = async () => {
     });
     return data;
   } catch (error) {
-    console.log("error message:-", error.message);
+    return error;
   }
 };
 
@@ -56,7 +56,7 @@ export const addToCart = async (id, name, url, price, quantity, size) => {
     const newDoc = await addDoc(collectionRef, addToCartDB);
     return newDoc.id;
   } catch (error) {
-    console.log("error", error.message);
+    return error;
   }
 };
 
@@ -70,10 +70,8 @@ export const handleUpdateCart = async (productToUpdate, index) => {
       String(product.variants) === String(productToUpdate.variants[index])
     );
   });
-  console.log("products already in cart", checkProductExist);
 
   if (checkProductExist.length > 0) {
-    console.log("Product already exists in the cart");
     return "Product already exists in the cart";
   }
 
@@ -83,10 +81,8 @@ export const handleUpdateCart = async (productToUpdate, index) => {
   const updatedProduct = productData.filter(
     (productData) => productData.id === productToUpdate.id
   );
-  console.log("products in hanlde", updatedProduct);
-  console.log("products in quantity=>", updatedProduct[0].quantity[index]);
+ 
   if (updatedProduct[0].quantity[index] === 0) {
-    console.log("Not enough stock available");
     return "Not enough stock available";
   }
 
@@ -109,7 +105,6 @@ export const handleUpdateCart = async (productToUpdate, index) => {
 
 //Update favorites in products Collection
 export const handleUpdateFavorite = async (product) => {
-  console.log("in fetch update for favorite", product.id);
   try {
     const collectionRef = doc(db, "products", product.id);
     let updateFavorited = {
@@ -117,7 +112,7 @@ export const handleUpdateFavorite = async (product) => {
     };
     await updateDoc(collectionRef, updateFavorited);
   } catch (error) {
-    console.log("error message in update product", error.message);
+    return error;
   }
 };
 
@@ -133,7 +128,7 @@ export const getCartProductsFromDB = async () => {
     });
     return data;
   } catch (error) {
-    console.log("error message:-", error.message);
+    return error;
   }
 };
 
@@ -141,35 +136,39 @@ export const updateCartQuantity = async (product, message) => {
   let updateCart;
   let cartProducts;
   if (message === "DECREMENET") {
-    console.log(" product.cartQuantity", product.cartQuantity);
     updateCart = {
-      quantity: product.quantity - 1,
       cartQuantity : product.cartQuantity - 1,
+    }
+  }else if(message === "INCREMENET"){
+    updateCart = {
+      cartQuantity : product.cartQuantity + 1,
+    }
+  }else if(message === "MAX"){
+    updateCart = {
+      cartQuantity : product.quantity,
     }
   }
   try {
     const collectionRef = doc(db, "Cart",product.id);
     await updateDoc(collectionRef, updateCart).then(()=>{
       cartProducts = getCartProductsFromDB().then((data)=>{
-        console.log("data", data)
         return data;
       })
     })
     return cartProducts;
   } catch (error) {
-    console.log("error", error.message);
+    return error;
   }
 };
 
 //Delete products from Cart
 export const deleteById = async (id) => {
-  console.log("handle delete func", id);
   const docRef = doc(db, "Cart", id);
   try {
     await deleteDoc(docRef).then(() => {
       return true;
     });
   } catch (error) {
-    console.log("error", error.message);
+    return error;
   }
 };

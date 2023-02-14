@@ -21,7 +21,6 @@ const ProductCard = () => {
   //Set size from select dropdown
   const [size, setSize] = useState("XS");
   const [indexOfQuantity, setIndexOfQuantity] = useState(0);
-  const [toCartDB, setToCartDB] = useState([]);
   const [itemfavorited, setItemfavorited] = useState(undefined);
   const [quantity, setQuantity] = useState(undefined);
   const [productClicked, setProductClicked] = useState([]);
@@ -44,10 +43,6 @@ const ProductCard = () => {
     setIndexOfQuantity(event.target.selectedIndex);
   };
 
-  const handleQuantity = (quantity) => {
-    return quantity[indexOfQuantity];
-  };
-
   //Get the heart shape for favorite item
   const favoriteItem = (favorited) => {
     return favorited ? (
@@ -56,7 +51,7 @@ const ProductCard = () => {
       <FontAwesomeIcon icon={faRegularHeart} />
     );
   };
-
+  //Handle Favorite Change
   const handleFavoriteChange = (product) => {
     try {
       handleUpdateFavorite(product).then(() => {
@@ -81,8 +76,6 @@ const ProductCard = () => {
 
   //Sending ID for Cart.jsx
   const handleAddToCart = (product) => {
-    console.log("sending to addToCart", product);
-    console.log("sending to addToCart", indexOfQuantity);
     try {
       handleUpdateCart(product, indexOfQuantity).then(() => {
         getProducts().then((data) => {
@@ -90,7 +83,7 @@ const ProductCard = () => {
         });
       });
     } catch (error) {
-      console.log("error in add to cart",error.message)
+      console.log("error in add to cart", error.message);
     }
   };
 
@@ -98,31 +91,42 @@ const ProductCard = () => {
     <div>
       {productClicked &&
         productClicked.map((product, index) => (
-          <div className={styles.container__modal} key={index}>
-            <div className={styles.container__modal__body}>
-              <div className={styles.container__for__ModalCards}>
+          <div className={styles.container__productCard} key={index}>
+            <div className={styles.container__productCard__body}>
+              <div className={styles.container__productCard__Cards}>
                 <div>
                   <img
-                    className={styles.container__modalCard__image}
+                    className={styles.container__productCard__image}
                     src={product.imageUrl}
                   />
                 </div>
                 <div className={styles.container__modalCard__details}>
-                  <div>
+                  <div className={styles.product__name}>
                     <h2>{product.name}</h2>
-                    <p onClick={() => handleFavoriteChange(product)}>
-                      {favoriteItem(itemfavorited)}
-                    </p>
+                    <p
+                    className={styles.product__favorite}
+                    onClick={() => handleFavoriteChange(product)}
+                  >
+                    {favoriteItem(itemfavorited)}
+                  </p>
+                    <p>$ {product.price}</p>
                   </div>
-                  <p>Size:</p>
-                  <select onChange={handleSizeChange}>
-                    {renderVariants(product.variants)}
-                  </select>
-                  <p>{handleQuantity(quantity)} in stock!</p>
-                  <p>$ {product.price}</p>
-                  <button onClick={() => handleAddToCart(product)}>
+                  <div className={styles.product__variants}>
+                    <p>Size:</p>
+                    <select onChange={handleSizeChange}>
+                      {renderVariants(product.variants)}
+                    </select>
+                  </div>
+                  <p>{product.quantity[indexOfQuantity]} in stock!</p>
+
+                  <button
+                    className={styles.button_addToCart}
+                    onClick={() => handleAddToCart(product)}
+                  >
                     Add to Cart
                   </button>
+
+                 
                 </div>
               </div>
             </div>

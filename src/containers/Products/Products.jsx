@@ -1,31 +1,31 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { dataContext } from "../../context/dataProvider";
-import { getProducts } from "../../Data-utils/fetch";
 import styles from "./Products.module.scss";
 import { NavLink } from "react-router-dom";
 
 const Products = () => {
   //Get the data in DB from Context
-  const {products,setProducts} = useContext(dataContext);
+  const { products, setProducts } = useContext(dataContext);
 
   return (
     <div>
+      <h2 className={styles.container__products__title}>Products</h2>
       <div className={styles.container__products__grid}>
         {products &&
           products.map((product) => (
             <div key={product.id} className={styles.container__productCards}>
-              <NavLink to={`/productCard/${product.id}`}>
+              <NavLink to={`/productCard/${product.id}`} className={styles.navlink}>
                 <img
                   className={styles.container__productCard__image}
                   src={product.imageUrl}
                 />
-                <div>
+                <div className={styles.container_product_details}>
                   <div>
-                    <label className={styles.container__productCard__name}>
+                    <p>
                       {product.name}
-                    </label>
+                    </p>
                   </div>
-                  <div className={styles.container__productCard__price}>
+                  <div>
                     <p>$ {product.price}</p>
                   </div>
                 </div>

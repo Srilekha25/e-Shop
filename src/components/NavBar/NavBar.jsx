@@ -10,11 +10,6 @@ const NavBar = () => {
       <NavLink to="/products" className={styles.container__navbar}>Products</NavLink>
       <NavLink to="/favorites" className={styles.container__navbar}>Favorites</NavLink>
       <NavLink to="/cart" className={styles.container__navbar}>Cart</NavLink>
-      <NavLink to="/searchBar">
-        <input type="text"/>
-        <button>Search</button>
-      </NavLink>
-
     </div>
   )
 }

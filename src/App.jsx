@@ -8,7 +8,6 @@ import ProductCard from "./components/ProductCard/ProductCard";
 import Favorites from "./containers/Favorites/Favorites";
 import Cart from "./containers/Cart/Cart";
 import NavBar from "./components/NavBar/NavBar";
-import SearchBar from "./components/SearchBar/SearchBar";
 
 //Import Context
 import { dataContext } from "./context/dataProvider";
@@ -47,7 +46,7 @@ function App() {
         <BrowserRouter>
           <div>
             <div className={styles.container__header__flex}>
-              <h3 className={styles.container__header__h3}>e-Shop</h3>
+              <h3 className={styles.container__header__h3}>Only you</h3>
               <NavBar />
             </div>
             <Routes>
@@ -56,7 +55,6 @@ function App() {
               <Route path="/productCard/:id" element={<ProductCard />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/searchBar" element={<SearchBar />} />
             </Routes>
           </div>
         </BrowserRouter>
