@@ -8,3 +8,4 @@ git checkout -B main
 git add -A
 git commit -m 'deploy'
 # git push -f git@github.com:Srilekha25/e-Shop.git main:gh-pages
+cd - 
