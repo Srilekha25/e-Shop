@@ -6,8 +6,6 @@ const HomePage = ({ carousel }) => {
 
   //Set current Image to chnage in carousel
   const [currentImage, setCurrentImage] = useState(1);
-  //Toggle mouse over
-  const [mouseOnHover, setMouseOnHover] = useState(false);
   const lengthOfCarousel = carousel.length;
 
   //Handle on click on arrow buttons
