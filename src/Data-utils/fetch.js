@@ -23,6 +23,7 @@ export const getImagesForCarousel = async () => {
    return error;
   }
 };
+
 //Get all the products in DB
 export const getProducts = async () => {
   try {
@@ -60,7 +61,7 @@ export const addToCart = async (id, name, url, price, quantity, size) => {
   }
 };
 
-//Update quantity in products Collection
+//Handle Update in products Collection
 export const handleUpdateCart = async (productToUpdate, index) => {
   // Check if the product with the same size already exists in the cart
   const cartProducts = await getCartProductsFromDB();

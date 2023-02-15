@@ -24,7 +24,7 @@ function App() {
   //State to store all products from DB
   const [products, setProducts] = useState([]);
 
-  //Call function to Carousel Images from DB
+  //DB Call to Carousel Images and products from DB
   useEffect(() => {
     try {
       getImagesForCarousel().then(

@@ -1,8 +1,7 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import {
-  addToCart,
   getProducts,
   handleUpdateCart,
   handleUpdateFavorite,
@@ -104,11 +103,11 @@ const ProductCard = () => {
                   <div className={styles.product__name}>
                     <h2>{product.name}</h2>
                     <p
-                    className={styles.product__favorite}
-                    onClick={() => handleFavoriteChange(product)}
-                  >
-                    {favoriteItem(itemfavorited)}
-                  </p>
+                      className={styles.product__favorite}
+                      onClick={() => handleFavoriteChange(product)}
+                    >
+                      {favoriteItem(itemfavorited)}
+                    </p>
                     <p>$ {product.price}</p>
                   </div>
                   <div className={styles.product__variants}>
@@ -125,8 +124,6 @@ const ProductCard = () => {
                   >
                     Add to Cart
                   </button>
-
-                 
                 </div>
               </div>
             </div>
