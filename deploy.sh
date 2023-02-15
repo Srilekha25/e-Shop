@@ -1,0 +1,1 @@
+# git push -f git@hithub.com:Srilekha25/e-Shop.git main:gh-pages
