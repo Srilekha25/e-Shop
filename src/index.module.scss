@@ -1,0 +1,14 @@
+@import "./assets/palette";
+
+body{
+    margin: 0%;
+    overflow-x: hidden;
+}
+
+:root{
+    color: $text-color-bg;
+    width: 100%;
+    font-family: 'Alegreya Sans', sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+}
