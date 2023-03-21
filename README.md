@@ -1,48 +1,47 @@
 # e-Shop
-
+Launch App here - 
 ## Outline
 
-This project is designed to reinforce your React learnings and make sure that you are comfortable with most aspect of the framework.
-With this project you will practice how to:
+This project is designed to reinforce React learnings
+In this project you will find how to:
 
 -   Fetch Data within a React App
 -   Use react-router-dom
 -   Use Firebase/Firestore
 
-## MVP
+This e-shop website should have four pages:
 
-At a minimum your e-shop website should have two pages:
-
+-   All products are stored in Firestore:
+    -   Firestore contains the following information:
+        -   quantity  (Different for different sizes)
+        -   variants (sizes)
+        -   price per unit
+        -   name
+        -   image url
+        -   favourited or not (boolean)
+            All data is stored in Firestore and fetched by the frontend, there is NO static product data in the react application.
 -   Home Page
     -   This will contain:
         -   A Grid of products
         -   Carousel of featured products
         -   Product Page (with id parameter) Similar to a product page on another site, allows you to add to cart and select product variants
--   All products should be stored in Firestore:
-    -   You should store the following information:
-        -   quantity
-        -   variants (could be colors, sizes, etc)
-        -   price per unit
-        -   name
-        -   image url
-        -   favourited or not (boolean)
-            All data should be stored in Firestore and fetched by the frontend, there should be NO static product data in the react application
 
-### Bonus
-
-Using Firestore and react create, a cart system. Create a cart page in your react app Add logic to prevent users from adding items to cart that are no longer in stock. You will have to check the current cart and the product quantity Cart page should have the following:
-
--   List of products in cart
-
-    -   Ability to change quantity of products in cart
-    -   Ability to remove items from cart
-
--   TIPS :
-
-1. Make sure your site is scoped to one category of products
-
-## Useful links
-
--   [React-router-dom](https://reactrouter.com/docs/en/v6/getting-started/overview)
--   [Dummy JSON](https://dummyjson.com/)
--   [Fake Store](https://fakestoreapi.com/)
+-   Products Page
+    -   This will Contain: 
+        -   The products of the e-Shop app.
+        -   When Clicked on a product, we can add, Favorite the product and the stock is displayed on the screen.
+        -   When Clicked on the favorites the product will be shown in the Favorites Page.
+        -   If there is enough stock the product can be added to Cart which is shown in the Cart Page.
+        -   Each time there is addition or deletion for the product the stock Changes accordingly.
+        -   If there is no Stock, prevent users from adding items to cart.
+        -   If the product is already added, it increases the quantity in Cart but won't add it again.
+    
+-   Favorites Page
+     -   This will Contain: 
+        -   The Product Favorited is shown in this page. 
+        -   If the product is removed as Favorite then the page deletes the product from this page.
+    
+-   Cart Page
+    -   This will Contain: 
+        -   The ability to change quantity of products in cart.
+        -   The ability to remove items from cart.
