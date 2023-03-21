@@ -1,5 +1,5 @@
 # e-Shop
-Launch App here - 
+Launch App here - https://srilekha25.github.io/e-Shop/
 ## Outline
 
 This project is designed to reinforce React learnings
