@@ -5,15 +5,12 @@ import styles from "./HomePage.module.scss";
 const HomePage = ({ carousel }) => {
 
   //Set current Image to chnage in carousel
-  const [currentImage, setCurrentImage] = useState(0);
+  const [currentImage, setCurrentImage] = useState(1);
   const lengthOfCarousel = carousel.length;
-  console.log("currentImage-",currentImage);
-  console.log("lengthOfCarousel-",lengthOfCarousel)
 
   //Handle on click on arrow buttons
   const handleNext = () => {
     setCurrentImage((currentImage + 1) % lengthOfCarousel);
-    console.log(currentImage)
   };
   //Handle on click on arrow buttons
   const handlePrev = () => {
