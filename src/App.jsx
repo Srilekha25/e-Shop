@@ -30,11 +30,11 @@ function App() {
       getImagesForCarousel().then(
         (data) => {
           setCarousel(data);
-        },
+          console.log(carousel);
+        });
         getProducts().then((product) => {
           setProducts(product);
-        })
-      );
+        });
     } catch (error) {
       console.log("error in useEffect app.jsx", error.message);
     }
@@ -50,7 +50,7 @@ function App() {
               <NavBar />
             </div>
             <Routes>
-              <Route path="/" element={<HomePage carousel={carousel} />} />
+              <Route path="/e-Shop/" element={<HomePage carousel={carousel} />} />
               <Route path="/products" element={<Products />} />
               <Route path="/productCard/:id" element={<ProductCard />} />
               <Route path="/favorites" element={<Favorites />} />
