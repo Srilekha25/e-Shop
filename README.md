@@ -2,6 +2,8 @@
 Launch App here - https://srilekha25.github.io/e-Shop/
 ## Outline
 
+# MVP
+
 This project is designed to reinforce React learnings
 In this project you will find how to:
 
